@@ -7,7 +7,7 @@ export const FlashSignerLockTestnet: CKBComponents.Script = {
 
 export const FlashSignerLockMainnet: CKBComponents.Script = {
   codeHash:
-    '0x577a5e5930e2ecdd6200765f3442e6119dc99e87df474f22f13cab819c80b242',
+    '0x081dbffa88dab54ba426d231ca64eb760cea2fe9e16761a1da400da1b2cbe128',
   hashType: 'type',
   args: '',
 }
