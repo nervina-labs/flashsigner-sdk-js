@@ -24,3 +24,5 @@ export interface FlashsignerResponse {
 }
 
 export type ChainType = 'mainnet' | 'testnet'
+
+export const FLASHSIGNER_DATA_KEY = 'flashsigner_data'
