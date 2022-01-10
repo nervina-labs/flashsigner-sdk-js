@@ -17,7 +17,7 @@ export interface LoginOptions {
   extra?: Record<string, any>
 }
 
-export const FlashsignerConfig = {}
+export { Config }
 
 export const loginWithRedirect = (
   successUrl: string,

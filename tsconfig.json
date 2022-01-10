@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": true,
@@ -14,8 +14,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "types": ["vite-plugin-svgr/client", "node"]
+    "outDir": "./dist",
+    "declaration": true,
+    "declarationDir": "./dist",
+    "types": ["node"]
   },
   "include": ["./src"]
 }
