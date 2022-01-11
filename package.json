@@ -57,7 +57,6 @@
   },
   "homepage": "https://github.com/nervina-labs/flashsigner-sdk-js#readme",
   "peerDependencies": {
-    "@nervosnetwork/ckb-sdk-core": "^0.101.0",
     "@nervosnetwork/ckb-sdk-rpc": "^0.101.0",
     "@nervosnetwork/ckb-sdk-utils": "^0.101.0"
   }
