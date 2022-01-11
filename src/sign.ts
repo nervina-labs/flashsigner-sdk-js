@@ -241,7 +241,7 @@ export function getSignTxResult<T extends { tx: RPC.RawTransaction }>(
   if (id) {
     result.id = id
   }
-  if (restExtra) {
+  if (restExtra && Object.keys(restExtra).length !== 0) {
     result.extra = restExtra
   }
   return result
