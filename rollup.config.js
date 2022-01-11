@@ -10,6 +10,9 @@ const baseConfig = {
   external: [
     '@nervosnetwork/ckb-sdk-utils',
     '@nervosnetwork/ckb-sdk-utils/lib/crypto/blake160',
+    '@nervosnetwork/ckb-sdk-rpc/lib/resultFormatter',
+    '@nervosnetwork/ckb-sdk-rpc/lib/paramsFormatter',
+    '@nervosnetwork/ckb-sdk-utils/lib/crypto/blake2b',
   ],
 }
 

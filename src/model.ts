@@ -1,5 +1,7 @@
 export enum FlashsignerAction {
-  Sign = 'sign',
+  SignMessage = 'sign-message',
+  SignRawMessage = 'sign-raw-message',
+  SignTransaction = 'sign-transaction',
   Login = 'login',
   TransferMnft = 'transfer-mnft',
 }

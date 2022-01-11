@@ -4,7 +4,8 @@ export * from './errors'
 export { loginWithRedirect, getLoginResult } from './login'
 export * from './model'
 export * from './result'
-export { transferMnftWithRedirect, getSignTxResult } from './transfer'
+export { transferMnftWithRedirect, getTransferMnftResult } from './transfer'
+export * from './sign'
 export {
   generateFlashsignerAddress,
   generateFlashsignerLockScript,

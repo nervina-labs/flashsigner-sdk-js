@@ -35,7 +35,7 @@ export class Config {
     Config.chainType = type
     if (type === 'testnet') {
       Config.setFlashsignerLock(FlashSignerLockTestnet)
-      Config.setFlashsignerURL('https://staging.flashsigner.work')
+      Config.setFlashsignerURL('http://localhost:3000')
       Config.setPwcoreLock(PwLockTestnet)
     } else {
       Config.setFlashsignerLock(FlashSignerLockMainnet)

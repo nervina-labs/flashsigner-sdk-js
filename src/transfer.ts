@@ -81,7 +81,7 @@ export interface SignTxResult<T> {
   extra?: T
 }
 
-export function getSignTxResult<T>(
+export function getTransferMnftResult<T>(
   data: FlashsignerSignData,
   id?: string | null,
   extra?: T
