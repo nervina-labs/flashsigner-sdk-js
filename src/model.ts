@@ -5,7 +5,7 @@ export enum FlashsignerAction {
 }
 
 export interface FlashsignerData {
-  lock: CKBComponents.Script
+  lock: RPC.Script
 }
 
 export interface FlashsignerLoginData extends FlashsignerData {
@@ -19,7 +19,7 @@ export interface FlashsignerSignData extends FlashsignerData {
 
 export interface FlashsignerResponse {
   code: number
-  info: string
+  error?: string
   result: FlashsignerLoginData | FlashsignerSignData
 }
 

@@ -9,26 +9,31 @@ export interface LoginOptions {
   phoneNumber?: string
   locale?: string
   failUrl?: string
+  isReplace?: string
   extra?: Record<string, any>
 }
 
-export const loginWithRedirect = (
+export const generateLoginURL = (
   successUrl: string,
-  options: LoginOptions = {}
-): void => {
+  options: Omit<LoginOptions, 'isReplace'> = {}
+): string => {
   const { name, locale, logo, phoneNumber, id, extra, failUrl } = options
   const url = new URL(`${Config.getFlashsignerURL()}/connect`)
   const { searchParams } = url
-  searchParams.set('action', FlashsignerAction.Login)
-  searchParams.set('success_url', successUrl)
+  const surl = new URL(successUrl)
+  surl.searchParams.set('action', FlashsignerAction.Login)
+  if (extra) {
+    surl.searchParams.set('extra', JSON.stringify(extra))
+  }
+  searchParams.set('success_url', surl.toString())
   if (name) {
-    searchParams.set('name', name)
+    searchParams.set('dapp_name', name)
   }
   if (locale) {
     searchParams.set('locale', locale)
   }
   if (logo) {
-    searchParams.set('logo', logo)
+    searchParams.set('dapp_logo', logo)
   }
   if (id) {
     searchParams.set('id', id)
@@ -39,10 +44,23 @@ export const loginWithRedirect = (
   if (failUrl) {
     searchParams.set('fail_url', failUrl)
   }
-  if (extra) {
-    searchParams.set('extra', JSON.stringify(extra))
+  const href = url.toString()
+
+  return href
+}
+
+export const loginWithRedirect = (
+  successUrl: string,
+  options: LoginOptions = {}
+): string => {
+  const { isReplace, ...rest } = options
+  const href = generateLoginURL(successUrl, rest)
+  if (isReplace) {
+    window.location.replace(href)
+  } else {
+    window.location.href = href
   }
-  window.location.replace(url.toString())
+  return href
 }
 
 export interface LoginResult<T> {
@@ -63,7 +81,14 @@ export function getLoginResult<T>(
   const result: LoginResult<T> = {
     message: data.message,
     signature: data.sig,
-    address: scriptToAddress(data.lock, chainType === 'mainnet'),
+    address: scriptToAddress(
+      {
+        hashType: data.lock.hash_type,
+        codeHash: data.lock.code_hash,
+        args: data.lock.args,
+      },
+      chainType === 'mainnet'
+    ),
     pubkey: data.sig.slice(0, 520),
   }
   if (id) {

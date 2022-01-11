@@ -5,7 +5,7 @@ export interface FlashsignerError extends Error {
 export class UserRefuesedError extends Error implements FlashsignerError {
   code = 401
 
-  constructor(message = 'UserRefuesedError') {
+  constructor(message = 'User Refuesed Error') {
     super(message)
     this.name = 'UserRefuesedError'
   }

@@ -11,9 +11,9 @@ export interface TransferMnftOptions extends Omit<LoginOptions, 'phoneNumber'> {
   toAddress: string
 }
 
-export const transferMnftWithRedirect = (
+export const generateTransferMnftURL = (
   successUrl: string,
-  options: TransferMnftOptions
+  options: Omit<TransferMnftOptions, 'isReplace'>
 ) => {
   const {
     name,
@@ -30,8 +30,12 @@ export const transferMnftWithRedirect = (
   } = options
   const url = new URL(`${Config.getFlashsignerURL()}/transfer-mnft`)
   const { searchParams } = url
-  searchParams.set('action', FlashsignerAction.TransferMnft)
-  searchParams.set('success_url', successUrl)
+  const surl = new URL(successUrl)
+  surl.searchParams.set('action', FlashsignerAction.TransferMnft)
+  if (extra) {
+    surl.searchParams.set('extra', JSON.stringify(extra))
+  }
+  searchParams.set('success_url', surl.toString())
   searchParams.set('class_id', classId)
   searchParams.set('issuer_id', issuerId)
   searchParams.set('token_id', tokenId)
@@ -39,13 +43,13 @@ export const transferMnftWithRedirect = (
   searchParams.set('from_address', fromAddress)
 
   if (name) {
-    searchParams.set('name', name)
+    searchParams.set('dapp_name', name)
   }
   if (locale) {
     searchParams.set('locale', locale)
   }
   if (logo) {
-    searchParams.set('logo', logo)
+    searchParams.set('dapp_logo', logo)
   }
   if (id) {
     searchParams.set('id', id)
@@ -53,10 +57,21 @@ export const transferMnftWithRedirect = (
   if (failUrl) {
     searchParams.set('fail_url', failUrl)
   }
-  if (extra) {
-    searchParams.set('extra', JSON.stringify(extra))
+
+  return url.toString()
+}
+
+export const transferMnftWithRedirect = (
+  successUrl: string,
+  options: TransferMnftOptions
+) => {
+  const { isReplace, ...rest } = options
+  const href = generateTransferMnftURL(successUrl, rest)
+  if (isReplace) {
+    window.location.replace(href)
+  } else {
+    window.location.href = href
   }
-  window.location.replace(url.toString())
 }
 
 export interface SignTxResult<T> {
@@ -74,7 +89,14 @@ export function getSignTxResult<T>(
   const chainType = Config.getChainType()
   const result: SignTxResult<T> = {
     transaction: data.tx,
-    address: scriptToAddress(data.lock, chainType === 'mainnet'),
+    address: scriptToAddress(
+      {
+        hashType: data.lock.hash_type,
+        codeHash: data.lock.code_hash,
+        args: data.lock.args,
+      },
+      chainType === 'mainnet'
+    ),
   }
   if (id) {
     result.id = id

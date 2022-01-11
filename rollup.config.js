@@ -3,7 +3,7 @@ import typescript from '@rollup/plugin-typescript'
 const baseConfig = {
   input: 'src/index.ts',
   output: {
-    file: 'dist/index.js',
+    dir: 'dist',
     format: 'cjs',
   },
   plugins: [typescript()],

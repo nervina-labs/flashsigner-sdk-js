@@ -7,6 +7,12 @@ import {
 } from './model'
 import { LoginResult, getLoginResult } from './login'
 import { SignTxResult, getSignTxResult } from './transfer'
+import {
+  InconsistAddressError,
+  InvalidParamsError,
+  MissingParamsError,
+  UserRefuesedError,
+} from './errors'
 
 export interface GetResulFromURLOptions<T> {
   onLogin: (result: LoginResult<T>) => void
@@ -18,7 +24,7 @@ export interface GetResulFromURLOptions<T> {
 export function getResultFromURL<T extends Record<string, any>>(
   options: GetResulFromURLOptions<T>
 ) {
-  const { onLogin, onTransferMnft, onSignMessage } = options
+  const { onLogin, onTransferMnft, onSignMessage, onError } = options
   const url = new URL(window.location.href)
   const { searchParams } = url
   const action: FlashsignerAction = searchParams.get(
@@ -37,6 +43,25 @@ export function getResultFromURL<T extends Record<string, any>>(
     throw new Error('Missing dapp data')
   }
   const parsedData = JSON.parse(data) as FlashsignerResponse
+  if (parsedData.code !== 200) {
+    switch (parsedData.code) {
+      case 401:
+        onError?.(new UserRefuesedError())
+        break
+      case 402:
+        onError?.(new InconsistAddressError())
+        break
+      case 403:
+        onError?.(new InvalidParamsError(parsedData.error))
+        break
+      case 404:
+        onError?.(new MissingParamsError(parsedData.error))
+        break
+      default:
+        break
+    }
+    return
+  }
   switch (action) {
     case FlashsignerAction.Login:
       onLogin(
