@@ -1,5 +1,5 @@
 {
-  "name": "@nervina-labs/flashsigner-sdk",
+  "name": "@nervina-labs/flashsigner",
   "version": "0.1.0",
   "description": "Flashsigner SDK",
   "files": [
