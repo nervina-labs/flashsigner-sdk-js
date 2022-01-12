@@ -1,6 +1,6 @@
 {
-  "name": "flashsigner-sdk",
-  "version": "0.1.2",
+  "name": "@nervina-labs/flashsigner-sdk",
+  "version": "0.1.0",
   "description": "Flashsigner SDK",
   "files": [
     "dist"
@@ -10,6 +10,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rollup -c"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "repository": {
     "type": "git",
