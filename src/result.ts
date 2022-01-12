@@ -21,7 +21,7 @@ export interface GetResulFromURLOptions<T> {
   onSignTransaction?: (result: SignTxResult<T>) => void
   onSignMessage?: (result: LoginResult<T>) => void
   onSignRawMessage?: (result: LoginResult<T>) => void
-  onError?: (error: Error, action: FlashsignerAction) => void
+  onError?: (error: Error, action: FlashsignerAction, extra?: T) => void
 }
 
 export function getResultFromURL<T extends Record<string, any>>(
@@ -56,16 +56,16 @@ export function getResultFromURL<T extends Record<string, any>>(
   if (parsedData.code !== 200) {
     switch (parsedData.code) {
       case 401:
-        onError?.(new UserRefuesedError(), action)
+        onError?.(new UserRefuesedError(), action, parsedExtra)
         break
       case 402:
-        onError?.(new InconsistAddressError(), action)
+        onError?.(new InconsistAddressError(), action, parsedExtra)
         break
       case 403:
-        onError?.(new InvalidParamsError(parsedData.error), action)
+        onError?.(new InvalidParamsError(parsedData.error), action, parsedExtra)
         break
       case 404:
-        onError?.(new MissingParamsError(parsedData.error), action)
+        onError?.(new MissingParamsError(parsedData.error), action, parsedExtra)
         break
       default:
         break

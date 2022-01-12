@@ -3,6 +3,8 @@ import {
   FlashSignerLockMainnet,
   PwLockMainnet,
   PwLockTestnet,
+  FlashsignerCellDepsMainnet,
+  FlashsignerCellDepsTestnet,
 } from './const'
 import { ChainType } from './model'
 
@@ -14,6 +16,8 @@ export class Config {
   private static chainType: ChainType = 'mainnet'
 
   private static pwcoreLock: CKBComponents.Script = PwLockMainnet
+
+  private static cellDep: CKBComponents.CellDep = FlashsignerCellDepsMainnet
 
   public static getFlashsignerURL() {
     return Config.flashsignerURL
@@ -31,16 +35,26 @@ export class Config {
     return Config.flashsignerLock
   }
 
+  public static setCellDep(cellDep: CKBComponents.CellDep) {
+    Config.cellDep = cellDep
+  }
+
+  public static getCellDep() {
+    return Config.cellDep
+  }
+
   public static setChainType(type: ChainType) {
     Config.chainType = type
     if (type === 'testnet') {
       Config.setFlashsignerLock(FlashSignerLockTestnet)
       Config.setFlashsignerURL('http://localhost:3000')
       Config.setPwcoreLock(PwLockTestnet)
+      Config.setCellDep(FlashsignerCellDepsTestnet)
     } else {
       Config.setFlashsignerLock(FlashSignerLockMainnet)
       Config.setFlashsignerURL('https://flashsigner.com')
       Config.setPwcoreLock(PwLockMainnet)
+      Config.setCellDep(FlashsignerCellDepsTestnet)
     }
   }
 

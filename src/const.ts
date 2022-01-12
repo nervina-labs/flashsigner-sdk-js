@@ -12,6 +12,24 @@ export const FlashSignerLockMainnet: CKBComponents.Script = {
   args: '',
 }
 
+export const FlashsignerCellDepsTestnet: CKBComponents.CellDep = {
+  depType: 'depGroup',
+  outPoint: {
+    index: '0x0',
+    txHash:
+      '0xb66776ff3244033fcd15312ae8b17d384c11bebbb923fce3bd896d89f4744d48',
+  },
+}
+
+export const FlashsignerCellDepsMainnet: CKBComponents.CellDep = {
+  depType: 'depGroup',
+  outPoint: {
+    index: '0x0',
+    txHash:
+      '0x0f0c22372a05f3c5f47acb066c65f9bae86bdce043762310e50309cc5a77abd4',
+  },
+}
+
 export const PwLockTestnet: CKBComponents.Script = {
   hashType: 'type',
   codeHash:

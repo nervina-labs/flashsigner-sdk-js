@@ -83,10 +83,25 @@ export const generateSignMessageURL = (
 
 export const RSA_KEY_SIZE = 2048
 
+const appendFlashsignerCelldeps = (cellDeps: RPC.CellDep[]) => {
+  const flCellDep = Config.getCellDep()
+  const newCellDeps = cellDeps.map(resultFormatter.toCellDep)
+  if (
+    newCellDeps.find(
+      (dep) => dep.outPoint?.txHash === flCellDep.outPoint?.txHash
+    )
+  ) {
+    return newCellDeps
+  }
+  newCellDeps.push(flCellDep)
+  return newCellDeps
+}
+
 export const transactionToMessage = (transaction: RPC.RawTransaction) => {
+  const cellDeps = appendFlashsignerCelldeps(transaction.cell_deps)
   const tx = {
     version: transaction.version,
-    cellDeps: transaction.cell_deps.map(resultFormatter.toCellDep),
+    cellDeps,
     headerDeps: transaction.header_deps,
     inputs: transaction.inputs.map(resultFormatter.toInput),
     outputs: transaction.outputs.map(resultFormatter.toOutput),
@@ -146,9 +161,10 @@ export const appendSignatureToTransaction = (
   transaction: RPC.RawTransaction,
   signedMessage: string
 ): RPC.RawTransaction => {
+  const cellDeps = appendFlashsignerCelldeps(transaction.cell_deps)
   const tx = {
     version: transaction.version,
-    cellDeps: transaction.cell_deps.map(resultFormatter.toCellDep),
+    cellDeps,
     headerDeps: transaction.header_deps,
     inputs: transaction.inputs.map(resultFormatter.toInput),
     outputs: transaction.outputs.map(resultFormatter.toOutput),
@@ -226,7 +242,7 @@ export function getSignTxResult<T extends { tx: RPC.RawTransaction }>(
     throw new Error('transaction is required')
   }
   const { tx: txToSign, ...restExtra } = extra
-  const signedTx = appendSignatureToTransaction(txToSign, data.message)
+  const signedTx = appendSignatureToTransaction(txToSign, data.sig)
   const result: SignTxResult<Omit<T, 'tx'>> = {
     transaction: signedTx,
     address: scriptToAddress(
