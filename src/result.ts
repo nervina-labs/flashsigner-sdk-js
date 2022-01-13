@@ -24,9 +24,16 @@ export interface GetResulFromURLOptions<T> {
   onError?: (error: Error, action: FlashsignerAction, extra?: T) => void
 }
 
-export function getResultFromURL<T extends Record<string, any>>(
-  options: GetResulFromURLOptions<T>
+export function getResultFromUrl<T extends Record<string, any>>(
+  uriOrOptions: string | GetResulFromURLOptions<T>,
+  opts?: GetResulFromURLOptions<T>
 ) {
+  const uri =
+    typeof uriOrOptions === 'string' ? uriOrOptions : window.location.href
+  const options = typeof uriOrOptions === 'string' ? opts : uriOrOptions
+  if (options == null) {
+    throw new Error('options is required')
+  }
   const {
     onLogin,
     onTransferMnft,
@@ -35,7 +42,7 @@ export function getResultFromURL<T extends Record<string, any>>(
     onError,
     onSignTransaction,
   } = options
-  const url = new URL(window.location.href)
+  const url = new URL(uri)
   const { searchParams } = url
   const action: FlashsignerAction = searchParams.get(
     // eslint-disable-next-line comma-dangle

@@ -13,32 +13,6 @@ $ yarn add @nervina-labs/flashsigner @nervosnetwork/ckb-sdk-rpc @nervosnetwork/c
 ```
 
 ## 用法
-
-### 目录
-
-+ [登录](#--)
-  - [`loginWithRedirect`](#-loginwithredirect-)
-    * [options](#options)
-  - [`generateLoginURL`](#-generateloginurl-)
-+ [转让 NFT](#---nft)
-  - [`transferMnftWithRedirect`](#-transfermnftwithredirect-)
-    * [options](#options-1)
-  - [`generateTransferMnftURL`](#-generatetransfermnfturl-)
-+ [签名](#--)
-  - [`signMessageWithRedirect`](#-signmessagewithredirect-)
-    * [options](#options-2)
-  - [`signTransactionWithRedirect`](#-signtransactionwithredirect-)
-    * [options](#options-3)
-+ [获取 Flashsigner 返回数据](#获取Flashsigner返回数据)
-  - [`getResultFromURL`](#-getresultfromurl-)
-    * [options](#options-4)
-+ [Config](#config)
-+ [Utils](#utils)
-  - [`generateFlashsignerLockScript`](#-generateflashsignerlockscript-)
-  - [`generateFlashsignerAddress`](#-generateflashsigneraddress-)
-  - [`transactionToMessage`](#-transactiontomessage-)
-  - [`appendSignatureToTransaction`](#-appendsignaturetotransaction-)
-
 ### 登录
 
 #### `loginWithRedirect`
@@ -173,6 +147,10 @@ signTransactionWithRedirect(successURL, options)
 ```js
 import { getResultFromURL, FlashsignerAction } from '@nervina-labs/flashsigner'
 
+// 请注意：
+// 如果第一个参数传入 URL 字符串，那就从传入的字符串中解析结果，
+// 第二个参数则必须传入回调函数。如果第一个参数传入回调函数，
+// 那就从 window.location.href 中解析结果。
 getResultFromURL({
   onLogin(res) {
     const {

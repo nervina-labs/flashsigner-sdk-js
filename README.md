@@ -154,6 +154,12 @@ Get the data returned by flashsigner.com from the `successURL` or `failURL`.
 ```js
 import { getResultFromURL, FlashsignerAction } from '@nervina-labs/flashsigner'
 
+// Note:
+// If the first parameter is passed as a URL string,
+// then the result is parsed from the passed string,
+// and the second parameter must be passed as a callback options.
+// If the first parameter is passed to callback options,
+// the result is parsed from window.location.href.
 getResultFromURL({
   onLogin(res) {
     const {
