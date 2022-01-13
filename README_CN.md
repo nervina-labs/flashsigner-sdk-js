@@ -14,6 +14,31 @@ $ yarn add @nervina-labs/flashsigner @nervosnetwork/ckb-sdk-rpc @nervosnetwork/c
 
 ## 用法
 
+### 目录
+
++ [登录](#--)
+  - [`loginWithRedirect`](#-loginwithredirect-)
+    * [options](#options)
+  - [`generateLoginURL`](#-generateloginurl-)
++ [转让 NFT](#---nft)
+  - [`transferMnftWithRedirect`](#-transfermnftwithredirect-)
+    * [options](#options-1)
+  - [`generateTransferMnftURL`](#-generatetransfermnfturl-)
++ [签名](#--)
+  - [`signMessageWithRedirect`](#-signmessagewithredirect-)
+    * [options](#options-2)
+  - [`signTransactionWithRedirect`](#-signtransactionwithredirect-)
+    * [options](#options-3)
++ [获取 Flashsigner 返回数据](#获取Flashsigner返回数据)
+  - [`getResultFromURL`](#-getresultfromurl-)
+    * [options](#options-4)
++ [Config](#config)
++ [Utils](#utils)
+  - [`generateFlashsignerLockScript`](#-generateflashsignerlockscript-)
+  - [`generateFlashsignerAddress`](#-generateflashsigneraddress-)
+  - [`transactionToMessage`](#-transactiontomessage-)
+  - [`appendSignatureToTransaction`](#-appendsignaturetotransaction-)
+
 ### 登录
 
 #### `loginWithRedirect`
@@ -139,7 +164,7 @@ signTransactionWithRedirect(successURL, options)
   * `failUrl` — `string, optional`: 登录失败后会跳转的 URL 地址
   * `extra` — `object, optional`: 指定的额外的数据，flashsigner 会返回相同的 extra 数据到 `successURL`
 
-### Get flashsigner response
+### 获取 Flashsigner 返回数据
 
 #### `getResultFromURL`
 
