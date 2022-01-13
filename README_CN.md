@@ -7,9 +7,9 @@
 ## 安装
 
 ```bash
-$ npm i @nervina-labs/flashsigner-sdk @nervosnetwork/ckb-sdk-rpc @nervosnetwork/ckb-sdk-utils
+$ npm i @nervina-labs/flashsigner @nervosnetwork/ckb-sdk-rpc @nervosnetwork/ckb-sdk-utils
 # or
-$ yarn add @nervina-labs/flashsigner-sdk @nervosnetwork/ckb-sdk-rpc @nervosnetwork/ckb-sdk-utils
+$ yarn add @nervina-labs/flashsigner @nervosnetwork/ckb-sdk-rpc @nervosnetwork/ckb-sdk-utils
 ```
 
 ## 用法
@@ -21,7 +21,7 @@ $ yarn add @nervina-labs/flashsigner-sdk @nervosnetwork/ckb-sdk-rpc @nervosnetwo
 重定向到 flashsigner 网站并且登录。
 
 ```js
-import { loginWithRedirect } from '@nervina-labs/flashsigner-sdk'
+import { loginWithRedirect } from '@nervina-labs/flashsigner'
 
 loginWithRedirect(successURL, options)
 // 如果你在一个函数中调用，那可能在函数执行完毕后需要手动调用 return
@@ -43,7 +43,7 @@ loginWithRedirect(successURL, options)
 生成一个登录 flashsigner 的 URL 地址
 
 ```js
-import { generateLoginURL } from '@nervina-labs/flashsigner-sdk'
+import { generateLoginURL } from '@nervina-labs/flashsigner'
 
 const url = generateLoginURL(successURL, options)
 window.location.href = url
@@ -60,7 +60,7 @@ window.location.replace(url)
 重定向到 flashsigner 网站并且转让 mNFT。
 
 ```js
-import { loginWithRedirect } from '@nervina-labs/flashsigner-sdk'
+import { loginWithRedirect } from '@nervina-labs/flashsigner'
 
 loginWithRedirect(successURL, options)
 ```
@@ -83,7 +83,7 @@ loginWithRedirect(successURL, options)
 #### `generateTransferMnftURL`
 
 ```js
-import { generateTransferMnftURL } from '@nervina-labs/flashsigner-sdk'
+import { generateTransferMnftURL } from '@nervina-labs/flashsigner'
 
 const url = generateTransferMnftURL(successURL, options)
 window.location.href = url
@@ -98,7 +98,7 @@ window.location.replace(url)
 重定向到 flashsigner 网站并签名。
 
 ```js
-import { signMessageWithRedirect } from '@nervina-labs/flashsigner-sdk'
+import { signMessageWithRedirect } from '@nervina-labs/flashsigner'
 
 signMessageWithRedirect(successURL, options)
 ```
@@ -122,7 +122,7 @@ signMessageWithRedirect(successURL, options)
 `signTransactionWithRedirect` 是 `signMessageWithRedirect` 的语法糖。
 
 ```js
-import { signTransactionWithRedirect } from '@nervina-labs/flashsigner-sdk'
+import { signTransactionWithRedirect } from '@nervina-labs/flashsigner'
 
 signTransactionWithRedirect(successURL, options)
 // If called within a function, you may need to manually `return` after the `signTransactionWithRedirect` call.
@@ -146,7 +146,7 @@ signTransactionWithRedirect(successURL, options)
 从 `successURL` 或 `failURL` 中获取数据。
 
 ```js
-import { getResultFromURL, FlashsignerAction } from '@nervina-labs/flashsigner-sdk'
+import { getResultFromURL, FlashsignerAction } from '@nervina-labs/flashsigner'
 
 getResultFromURL({
   onLogin(res) {
@@ -255,7 +255,7 @@ getResultFromURL({
 `Config` 可以用来设置一些 Flashsigner 的配置，例如网站地址，chain type 等。
 
 ```js
-import { Config } from '@nervina-labs/flashsigner-sdk'
+import { Config } from '@nervina-labs/flashsigner'
 
 // 大多数情况下你只需要在入口文件设置 chain type
 // in your entry file
@@ -271,7 +271,7 @@ More config can be found in [source](https://github.com/nervina-labs/flashsigner
 从公钥生成 lock script。
 
 ```js
-import { generateFlashsignerLockScript } from '@nervina-labs/flashsigner-sdk'
+import { generateFlashsignerLockScript } from '@nervina-labs/flashsigner'
 
 const lock: CKBComponents.Script = generateFlashsignerLockScript(pubkey)
 ```
@@ -281,7 +281,7 @@ const lock: CKBComponents.Script = generateFlashsignerLockScript(pubkey)
 从公钥生成 CKB 地址。
 
 ```js
-import { generateFlashsignerAddress } from '@nervina-labs/flashsigner-sdk'
+import { generateFlashsignerAddress } from '@nervina-labs/flashsigner'
 
 const address: string = generateFlashsignerAddress(pubkey)
 ```
@@ -291,7 +291,7 @@ const address: string = generateFlashsignerAddress(pubkey)
 把交易序列化为 hex 字符串。
 
 ```js
-import { transactionToMessage } from '@nervina-labs/flashsigner-sdk'
+import { transactionToMessage } from '@nervina-labs/flashsigner'
 
 const message: string = transactionToMessage(tx)
 ```
@@ -301,7 +301,7 @@ const message: string = transactionToMessage(tx)
 把签名添加到交易的 witness 中。
 
 ```js
-import { appendSignatureToTransaction } from '@nervina-labs/flashsigner-sdk'
+import { appendSignatureToTransaction } from '@nervina-labs/flashsigner'
 
 const tx: RPC.RawTransaction = appendSignatureToTransaction(tx, sig)
 // you can send the tx to the CKB node

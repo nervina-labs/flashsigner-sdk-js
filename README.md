@@ -9,9 +9,9 @@
 ## Install
 
 ```bash
-$ npm i @nervina-labs/flashsigner-sdk @nervosnetwork/ckb-sdk-rpc @nervosnetwork/ckb-sdk-utils
+$ npm i @nervina-labs/flashsigner @nervosnetwork/ckb-sdk-rpc @nervosnetwork/ckb-sdk-utils
 # or
-$ yarn add @nervina-labs/flashsigner-sdk @nervosnetwork/ckb-sdk-rpc @nervosnetwork/ckb-sdk-utils
+$ yarn add @nervina-labs/flashsigner @nervosnetwork/ckb-sdk-rpc @nervosnetwork/ckb-sdk-utils
 ```
 
 ## Usege
@@ -23,7 +23,7 @@ $ yarn add @nervina-labs/flashsigner-sdk @nervosnetwork/ckb-sdk-rpc @nervosnetwo
 Redirect to flashsigner.com and login.
 
 ```js
-import { loginWithRedirect } from '@nervina-labs/flashsigner-sdk'
+import { loginWithRedirect } from '@nervina-labs/flashsigner'
 
 loginWithRedirect(successURL, options)
 // If called within a function, you may need to manually `return` after the `loginWithRedirect` call.
@@ -45,7 +45,7 @@ loginWithRedirect(successURL, options)
 Generate a URL that can be used to log in at flashsigner.
 
 ```js
-import { generateLoginURL } from '@nervina-labs/flashsigner-sdk'
+import { generateLoginURL } from '@nervina-labs/flashsigner'
 
 const url = generateLoginURL(successURL, options)
 window.location.href = url
@@ -62,7 +62,7 @@ window.location.replace(url)
 Redirect to flashsigner.com and transfer mNFT.
 
 ```js
-import { loginWithRedirect } from '@nervina-labs/flashsigner-sdk'
+import { loginWithRedirect } from '@nervina-labs/flashsigner'
 
 loginWithRedirect(successURL, options)
 // If called within a function, you may need to manually `return` after the `loginWithRedirect` call.
@@ -86,7 +86,7 @@ loginWithRedirect(successURL, options)
 #### `generateTransferMnftURL`
 
 ```js
-import { generateTransferMnftURL } from '@nervina-labs/flashsigner-sdk'
+import { generateTransferMnftURL } from '@nervina-labs/flashsigner'
 
 const url = generateTransferMnftURL(successURL, options)
 window.location.href = url
@@ -103,7 +103,7 @@ window.location.replace(url)
 Redirect to flashsigner.com and sign message.
 
 ```js
-import { signMessageWithRedirect } from '@nervina-labs/flashsigner-sdk'
+import { signMessageWithRedirect } from '@nervina-labs/flashsigner'
 
 signMessageWithRedirect(successURL, options)
 // If called within a function, you may need to manually `return` after the `signMessageWithRedirect` call.
@@ -128,7 +128,7 @@ Redirect to flashsigner.com and sign transaction.
 `signTransactionWithRedirect` is the syntactic sugar of `signMessageWithRedirect`.
 
 ```js
-import { signTransactionWithRedirect } from '@nervina-labs/flashsigner-sdk'
+import { signTransactionWithRedirect } from '@nervina-labs/flashsigner'
 
 signTransactionWithRedirect(successURL, options)
 // If called within a function, you may need to manually `return` after the `signTransactionWithRedirect` call.
@@ -152,7 +152,7 @@ signTransactionWithRedirect(successURL, options)
 Get the data returned by flashsigner.com from the `successURL` or `failURL`.
 
 ```js
-import { getResultFromURL, FlashsignerAction } from '@nervina-labs/flashsigner-sdk'
+import { getResultFromURL, FlashsignerAction } from '@nervina-labs/flashsigner'
 
 getResultFromURL({
   onLogin(res) {
@@ -263,7 +263,7 @@ getResultFromURL({
 `Config` can be used to set some configuration of Flashsigner, like chain type, flashsigner URL, flashsigner lock, etc.
 
 ```js
-import { Config } from '@nervina-labs/flashsigner-sdk'
+import { Config } from '@nervina-labs/flashsigner'
 
 // In most cases you only need to set the chain type
 // in your entry file
@@ -279,7 +279,7 @@ More config can be found in [source](https://github.com/nervina-labs/flashsigner
 Generate the lock script from public key.
 
 ```js
-import { generateFlashsignerLockScript } from '@nervina-labs/flashsigner-sdk'
+import { generateFlashsignerLockScript } from '@nervina-labs/flashsigner'
 
 const lock: CKBComponents.Script = generateFlashsignerLockScript(pubkey)
 ```
@@ -289,7 +289,7 @@ const lock: CKBComponents.Script = generateFlashsignerLockScript(pubkey)
 Generate the CKB address from public key.
 
 ```js
-import { generateFlashsignerAddress } from '@nervina-labs/flashsigner-sdk'
+import { generateFlashsignerAddress } from '@nervina-labs/flashsigner'
 
 const address: string = generateFlashsignerAddress(pubkey)
 ```
@@ -299,7 +299,7 @@ const address: string = generateFlashsignerAddress(pubkey)
 Serialize the transaction as a hex message.
 
 ```js
-import { transactionToMessage } from '@nervina-labs/flashsigner-sdk'
+import { transactionToMessage } from '@nervina-labs/flashsigner'
 
 const message: string = transactionToMessage(tx)
 ```
@@ -309,7 +309,7 @@ const message: string = transactionToMessage(tx)
 Adds a signature to the witness of an unsigned transaction.
 
 ```js
-import { appendSignatureToTransaction } from '@nervina-labs/flashsigner-sdk'
+import { appendSignatureToTransaction } from '@nervina-labs/flashsigner'
 
 const tx: RPC.RawTransaction = appendSignatureToTransaction(tx, sig)
 // you can send the tx to the CKB node
