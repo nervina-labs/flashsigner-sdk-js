@@ -2,7 +2,7 @@
 
 `flashsigner-sdk-js` 是一个用来与 Flashsigner 网站交互的库。
 
-[Live demo](https://demo.flashsigner.com)
+[Live demo](https://demo.flashsigner.work)
 
 ## 安装
 
@@ -60,9 +60,9 @@ window.location.replace(url)
 重定向到 flashsigner 网站并且转让 mNFT。
 
 ```js
-import { loginWithRedirect } from '@nervina-labs/flashsigner'
+import { transferMnftWithRedirect } from '@nervina-labs/flashsigner'
 
-loginWithRedirect(successURL, options)
+transferMnftWithRedirect(successURL, options)
 ```
 
 ##### options

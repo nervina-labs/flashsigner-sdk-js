@@ -2,7 +2,7 @@
 
 `flashsigner-sdk-js` is a JavaScript library that interacts with `flashsigner.com`.
 
-[Live demo](https://demo.flashsigner.com)
+[Live demo](https://demo.flashsigner.work)
 
 [中文文档](./README_CN.md)
 
@@ -62,9 +62,9 @@ window.location.replace(url)
 Redirect to flashsigner.com and transfer mNFT.
 
 ```js
-import { loginWithRedirect } from '@nervina-labs/flashsigner'
+import { transferMnftWithRedirect } from '@nervina-labs/flashsigner'
 
-loginWithRedirect(successURL, options)
+transferMnftWithRedirect(successURL, options)
 // If called within a function, you may need to manually `return` after the `loginWithRedirect` call.
 ```
 
