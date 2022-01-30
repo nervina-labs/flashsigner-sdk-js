@@ -24,7 +24,7 @@ export interface GetResulFromURLOptions<T> {
   onError?: (error: Error, action: FlashsignerAction, extra?: T) => void
 }
 
-export function getResultFromUrl<T extends Record<string, any>>(
+export function getResultFromURL<T extends Record<string, any>>(
   uriOrOptions: string | GetResulFromURLOptions<T>,
   opts?: GetResulFromURLOptions<T>
 ) {
