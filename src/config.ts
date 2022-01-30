@@ -54,7 +54,7 @@ export class Config {
       Config.setFlashsignerLock(FlashSignerLockMainnet)
       Config.setFlashsignerURL('https://flashsigner.com')
       Config.setPwcoreLock(PwLockMainnet)
-      Config.setCellDep(FlashsignerCellDepsTestnet)
+      Config.setCellDep(FlashsignerCellDepsMainnet)
     }
   }
 
