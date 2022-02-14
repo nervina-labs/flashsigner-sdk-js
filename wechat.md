@@ -71,13 +71,14 @@ Page({
         wx.miniprogram.postMessage({
             data: res
         })
-        wx.navigateTo('my login page')
+        wx.miniprogram.navigateTo('my login page')
+        // 或者调用微信 sdk 进行其它操作
     },
     onTransferMnft(res) {
         wx.miniprogram.postMessage({
             data: res
         })
-        wx.navigateTo('my transfer page')
+        wx.miniprogram.navigateTo('my transfer page')
     },
     })
   </script>
