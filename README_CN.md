@@ -4,6 +4,8 @@
 
 [Live demo](https://demo.flashsigner.work)
 
+[微信小程序](./wechat.md)
+
 ## 安装
 
 ```bash

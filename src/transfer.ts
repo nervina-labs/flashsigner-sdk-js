@@ -1,4 +1,5 @@
 import { scriptToAddress } from '@nervosnetwork/ckb-sdk-utils'
+import URL from 'url-parse'
 import { Config } from './config'
 import { FlashsignerAction, FlashsignerSignData } from './model'
 import { LoginOptions } from './login'
@@ -28,34 +29,47 @@ export const generateTransferMnftURL = (
     tokenId,
     fromAddress,
   } = options
-  const url = new URL(`${Config.getFlashsignerURL()}/transfer-mnft`)
-  const { searchParams } = url
-  const surl = new URL(successUrl)
-  surl.searchParams.set('action', FlashsignerAction.TransferMnft)
+  const url = new URL(`${Config.getFlashsignerURL()}/transfer-mnft`, true)
+  const { query } = url
+  const surl = new URL(successUrl, true)
+  // surl.searchParams.set('action', FlashsignerAction.TransferMnft)
+  surl.query.action = FlashsignerAction.TransferMnft
   if (extra) {
-    surl.searchParams.set('extra', JSON.stringify(extra))
+    // surl.searchParams.set('extra', JSON.stringify(extra))
+    surl.query.extra = JSON.stringify(extra)
   }
-  searchParams.set('success_url', surl.toString())
-  searchParams.set('class_id', classId)
-  searchParams.set('issuer_id', issuerId)
-  searchParams.set('token_id', tokenId)
-  searchParams.set('to_address', toAddress)
-  searchParams.set('from_address', fromAddress)
+  // searchParams.set('success_url', surl.toString())
+  // searchParams.set('class_id', classId)
+  // searchParams.set('issuer_id', issuerId)
+  // searchParams.set('token_id', tokenId)
+  // searchParams.set('to_address', toAddress)
+  // searchParams.set('from_address', fromAddress)
+  query.success_url = surl.toString()
+  query.class_id = classId
+  query.issuer_id = issuerId
+  query.token_id = tokenId
+  query.to_address = toAddress
+  query.from_address = fromAddress
 
   if (name) {
-    searchParams.set('dapp_name', name)
+    // searchParams.set('dapp_name', name)
+    query.dapp_name = name
   }
   if (locale) {
-    searchParams.set('locale', locale)
+    // searchParams.set('locale', locale)
+    query.locale = locale
   }
   if (logo) {
-    searchParams.set('dapp_logo', logo)
+    // searchParams.set('dapp_logo', logo)
+    query.dapp_logo = logo
   }
   if (id) {
-    searchParams.set('id', id)
+    // searchParams.set('id', id)
+    query.id = id
   }
   if (failUrl) {
-    searchParams.set('fail_url', failUrl)
+    // searchParams.set('fail_url', failUrl)
+    query.fail_url = failUrl
   }
 
   return url.toString()

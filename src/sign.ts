@@ -9,6 +9,7 @@ import {
 import resultFormatter from '@nervosnetwork/ckb-sdk-rpc/lib/resultFormatter'
 import paramsFormatter from '@nervosnetwork/ckb-sdk-rpc/lib/paramsFormatter'
 import blake2b from '@nervosnetwork/ckb-sdk-utils/lib/crypto/blake2b'
+import URL from 'url-parse'
 import { MissingParamsError } from './errors'
 import { Config } from './config'
 import { FlashsignerAction } from './model'
@@ -43,38 +44,50 @@ export const generateSignMessageURL = (
   options: Omit<SignOptions, 'isReplace'> = { message: '' }
 ): string => {
   const { name, locale, logo, isRaw, id, extra, failUrl, message } = options
-  const url = new URL(`${Config.getFlashsignerURL()}/sign-message`)
-  const { searchParams } = url
-  const surl = new URL(successUrl)
-  surl.searchParams.set(
-    'action',
-    isRaw ? FlashsignerAction.SignRawMessage : FlashsignerAction.SignMessage
-  )
+  const url = new URL(`${Config.getFlashsignerURL()}/sign-message`, true)
+  const { query } = url
+  const surl = new URL(successUrl, true)
+  // surl.searchParams.set(
+  //   'action',
+  //   isRaw ? FlashsignerAction.SignRawMessage : FlashsignerAction.SignMessage
+  // )
+  surl.query.action = isRaw
+    ? FlashsignerAction.SignRawMessage
+    : FlashsignerAction.SignMessage
   if (extra) {
-    surl.searchParams.set('extra', JSON.stringify(extra))
+    // surl.searchParams.set('extra', JSON.stringify(extra))
+    surl.query.extra = JSON.stringify(extra)
   }
-  searchParams.set('success_url', surl.toString())
+  // searchParams.set('success_url', surl.toString())
+  query.success_url = surl.toString()
   if (message === '') {
     throw new MissingParamsError('message')
   }
-  searchParams.set('message', message)
+  // searchParams.set('message', message)
+  query.message = message
   if (name) {
-    searchParams.set('dapp_name', name)
+    // searchParams.set('dapp_name', name)
+    query.dapp_name = name
   }
   if (locale) {
-    searchParams.set('locale', locale)
+    // searchParams.set('locale', locale)
+    query.locale = locale
   }
   if (logo) {
-    searchParams.set('dapp_logo', logo)
+    // searchParams.set('dapp_logo', logo)
+    query.dapp_logo = logo
   }
   if (id) {
-    searchParams.set('id', id)
+    // searchParams.set('id', id)
+    query.id = id
   }
   if (isRaw) {
-    searchParams.set('is_raw', Boolean(isRaw).toString())
+    // searchParams.set('is_raw', Boolean(isRaw).toString())
+    query.is_raw = Boolean(isRaw).toString()
   }
   if (failUrl) {
-    searchParams.set('fail_url', failUrl)
+    // searchParams.set('fail_url', failUrl)
+    query.fail_url = failUrl
   }
   const href = url.toString()
 
@@ -277,10 +290,13 @@ export const generateSignTransactionURL = (
     },
   })
 
-  const url = new URL(href)
-  const surl = new URL(url.searchParams.get('success_url')!)
-  surl.searchParams.set('action', FlashsignerAction.SignTransaction)
-  url.searchParams.set('success_url', surl.toString())
+  const url = new URL(href, true)
+  // const surl = new URL(url.searchParams.get('success_url')!)
+  const surl = new URL(url.query.success_url!, true)
+  // surl.searchParams.set('action', FlashsignerAction.SignTransaction)
+  surl.query.action = FlashsignerAction.SignTransaction
+  // url.searchParams.set('success_url', surl.toString())
+  url.query.success_url = surl.toString()
 
   return url.toString()
 }

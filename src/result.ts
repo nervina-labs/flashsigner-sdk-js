@@ -1,3 +1,4 @@
+import URL from 'url-parse'
 import {
   FlashsignerAction,
   FlashsignerLoginData,
@@ -42,21 +43,17 @@ export function getResultFromURL<T extends Record<string, any>>(
     onError,
     onSignTransaction,
   } = options
-  const url = new URL(uri)
-  const { searchParams } = url
-  const action: FlashsignerAction = searchParams.get(
-    // eslint-disable-next-line comma-dangle
-    'action'
-  ) as FlashsignerAction
+  const url = new URL(uri, true)
+  const { query } = url
+  const action: FlashsignerAction = query.action as FlashsignerAction
   if (action === null) {
     throw new Error('Missing dapp action')
   }
-  const data = searchParams.get(FLASHSIGNER_DATA_KEY)
-  const extra = searchParams.get('extra')
-  const id = searchParams.get('id')
+  const data = query[FLASHSIGNER_DATA_KEY]
+  const { extra, id } = query
   const parsedExtra: T = extra ? JSON.parse(extra) : undefined
 
-  if (data === null) {
+  if (data == null) {
     throw new Error('Missing dapp data')
   }
   const parsedData = JSON.parse(data) as FlashsignerResponse

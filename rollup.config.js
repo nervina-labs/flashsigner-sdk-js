@@ -1,4 +1,6 @@
 import typescript from '@rollup/plugin-typescript'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
 
 const baseConfig = {
   input: 'src/index.ts',
@@ -6,7 +8,7 @@ const baseConfig = {
     dir: 'dist',
     format: 'cjs',
   },
-  plugins: [typescript()],
+  plugins: [typescript(), nodeResolve(), commonjs()],
   external: [
     '@nervosnetwork/ckb-sdk-utils',
     '@nervosnetwork/ckb-sdk-utils/lib/crypto/blake160',

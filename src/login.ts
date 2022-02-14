@@ -1,4 +1,5 @@
 import { scriptToAddress } from '@nervosnetwork/ckb-sdk-utils'
+import URL from 'url-parse'
 import { Config } from './config'
 import { FlashsignerAction, FlashsignerLoginData } from './model'
 
@@ -18,31 +19,31 @@ export const generateLoginURL = (
   options: Omit<LoginOptions, 'isReplace'> = {}
 ): string => {
   const { name, locale, logo, phoneNumber, id, extra, failUrl } = options
-  const url = new URL(`${Config.getFlashsignerURL()}/connect`)
-  const { searchParams } = url
-  const surl = new URL(successUrl)
-  surl.searchParams.set('action', FlashsignerAction.Login)
+  const url = new URL(`${Config.getFlashsignerURL()}/connect`, true)
+  const { query } = url
+  const surl = new URL(successUrl, true)
+  surl.query.action = FlashsignerAction.Login
   if (extra) {
-    surl.searchParams.set('extra', JSON.stringify(extra))
+    surl.query.extra = JSON.stringify(extra)
   }
-  searchParams.set('success_url', surl.toString())
+  query.success_url = surl.toString()
   if (name) {
-    searchParams.set('dapp_name', name)
+    query.dapp_name = name
   }
   if (locale) {
-    searchParams.set('locale', locale)
+    query.locale = locale
   }
   if (logo) {
-    searchParams.set('dapp_logo', logo)
+    query.dapp_logo = logo
   }
   if (id) {
-    searchParams.set('id', id)
+    query.id = id
   }
   if (phoneNumber) {
-    searchParams.set('phone_number', phoneNumber)
+    query.phone_number = phoneNumber
   }
   if (failUrl) {
-    searchParams.set('fail_url', failUrl)
+    query.fail_url = failUrl
   }
   const href = url.toString()
 
