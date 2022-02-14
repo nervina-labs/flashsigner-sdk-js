@@ -1,5 +1,7 @@
 # 微信小程序
 
+[SDK 文档](./README_CN.md)
+
 ## Demo
 
 安装微信小程序开发者工具，打开 [Flashsigner demo](https://developers.weixin.qq.com/s/cS9UR4m376xy)。
