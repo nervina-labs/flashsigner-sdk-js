@@ -24,7 +24,7 @@ export interface SignOptions {
   id?: string
   locale?: string
   failUrl?: string
-  isReplace?: string
+  isReplace?: boolean
   extra?: Record<string, any>
 }
 
@@ -35,7 +35,7 @@ export interface SignTransactionOptions {
   id?: string
   locale?: string
   failUrl?: string
-  isReplace?: string
+  isReplace?: boolean
   extra?: Record<string, any>
 }
 

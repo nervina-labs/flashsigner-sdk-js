@@ -10,7 +10,7 @@ export interface LoginOptions {
   phoneNumber?: string
   locale?: string
   failUrl?: string
-  isReplace?: string
+  isReplace?: boolean
   extra?: Record<string, any>
 }
 
