@@ -12,6 +12,14 @@ export interface TransferMnftOptions extends Omit<LoginOptions, 'phoneNumber'> {
   toAddress: string
 }
 
+export interface TransferCotaNftOptions
+  extends Omit<LoginOptions, 'phoneNumber'> {
+  cotaId: string
+  tokenIndex: string | number
+  fromAddress: string
+  toAddress: string
+}
+
 export const generateTransferMnftURL = (
   successUrl: string,
   options: Omit<TransferMnftOptions, 'isReplace'>
@@ -32,18 +40,10 @@ export const generateTransferMnftURL = (
   const url = new URL(`${Config.getFlashsignerURL()}/transfer-mnft`, true)
   const { query } = url
   const surl = new URL(successUrl, true)
-  // surl.searchParams.set('action', FlashsignerAction.TransferMnft)
   surl.query.action = FlashsignerAction.TransferMnft
   if (extra) {
-    // surl.searchParams.set('extra', JSON.stringify(extra))
     surl.query.extra = JSON.stringify(extra)
   }
-  // searchParams.set('success_url', surl.toString())
-  // searchParams.set('class_id', classId)
-  // searchParams.set('issuer_id', issuerId)
-  // searchParams.set('token_id', tokenId)
-  // searchParams.set('to_address', toAddress)
-  // searchParams.set('from_address', fromAddress)
   query.success_url = surl.toString()
   query.class_id = classId
   query.issuer_id = issuerId
@@ -52,23 +52,66 @@ export const generateTransferMnftURL = (
   query.from_address = fromAddress
 
   if (name) {
-    // searchParams.set('dapp_name', name)
     query.dapp_name = name
   }
   if (locale) {
-    // searchParams.set('locale', locale)
     query.locale = locale
   }
   if (logo) {
-    // searchParams.set('dapp_logo', logo)
     query.dapp_logo = logo
   }
   if (id) {
-    // searchParams.set('id', id)
     query.id = id
   }
   if (failUrl) {
-    // searchParams.set('fail_url', failUrl)
+    query.fail_url = failUrl
+  }
+
+  return url.toString()
+}
+
+export const generateTransferCotaNftURL = (
+  successUrl: string,
+  options: Omit<TransferCotaNftOptions, 'isReplace'>
+) => {
+  const {
+    name,
+    locale,
+    logo,
+    id,
+    extra,
+    failUrl,
+    tokenIndex,
+    cotaId,
+    toAddress,
+    fromAddress,
+  } = options
+  const url = new URL(`${Config.getFlashsignerURL()}/transfer-cnft`, true)
+  const { query } = url
+  const surl = new URL(successUrl, true)
+  surl.query.action = FlashsignerAction.TransferMnft
+  if (extra) {
+    surl.query.extra = JSON.stringify(extra)
+  }
+  query.success_url = surl.toString()
+  query.class_id = cotaId
+  query.token_id = tokenIndex.toString()
+  query.to_address = toAddress
+  query.from_address = fromAddress
+
+  if (name) {
+    query.dapp_name = name
+  }
+  if (locale) {
+    query.locale = locale
+  }
+  if (logo) {
+    query.dapp_logo = logo
+  }
+  if (id) {
+    query.id = id
+  }
+  if (failUrl) {
     query.fail_url = failUrl
   }
 
@@ -81,6 +124,19 @@ export const transferMnftWithRedirect = (
 ) => {
   const { isReplace, ...rest } = options
   const href = generateTransferMnftURL(successUrl, rest)
+  if (isReplace) {
+    window.location.replace(href)
+  } else {
+    window.location.href = href
+  }
+}
+
+export const transferCotaNftWithRedirect = (
+  successUrl: string,
+  options: TransferCotaNftOptions
+) => {
+  const { isReplace, ...rest } = options
+  const href = generateTransferCotaNftURL(successUrl, rest)
   if (isReplace) {
     window.location.replace(href)
   } else {
