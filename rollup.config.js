@@ -15,6 +15,8 @@ const baseConfig = {
     '@nervosnetwork/ckb-sdk-rpc/lib/resultFormatter',
     '@nervosnetwork/ckb-sdk-rpc/lib/paramsFormatter',
     '@nervosnetwork/ckb-sdk-utils/lib/crypto/blake2b',
+    '@ckb-lumos/base',
+    'ckb-js-toolkit',
   ],
 }
 

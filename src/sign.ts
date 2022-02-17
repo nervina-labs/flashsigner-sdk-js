@@ -10,11 +10,12 @@ import resultFormatter from '@nervosnetwork/ckb-sdk-rpc/lib/resultFormatter'
 import paramsFormatter from '@nervosnetwork/ckb-sdk-rpc/lib/paramsFormatter'
 import blake2b from '@nervosnetwork/ckb-sdk-utils/lib/crypto/blake2b'
 import URL from 'url-parse'
+import { core } from '@ckb-lumos/base'
+import { Reader } from 'ckb-js-toolkit'
 import { MissingParamsError } from './errors'
 import { Config } from './config'
-import { FlashsignerAction } from './model'
+import { FlashsignerAction, FlashsignerLoginData } from './model'
 import { SignTxResult } from './transfer'
-import { FlashsignerLoginData } from '.'
 
 export interface SignOptions {
   message: string
@@ -145,6 +146,18 @@ export const transactionToMessage = (transaction: RPC.RawTransaction) => {
     lock: `0x${'0'.repeat(lockLength)}`,
   }
 
+  const witnessArgs = new core.WitnessArgs(new Reader(transaction.witnesses[0]))
+  const inputType = witnessArgs.getInputType()
+  const outputType = witnessArgs.getOutputType()
+  if (inputType.hasValue()) {
+    emptyWitness.inputType = new Reader(inputType.value().raw()).serializeJson()
+  }
+  if (outputType.hasValue()) {
+    emptyWitness.outputType = new Reader(
+      outputType.value().raw()
+    ).serializeJson()
+  }
+
   const serializedEmptyWitnessBytes = hexToBytes(
     serializeWitnessArgs(emptyWitness)
   )
@@ -206,6 +219,18 @@ export const appendSignatureToTransaction = (
   const emptyWitness = {
     ...witnessGroup[0],
     lock: `0x${'0'.repeat(lockLength)}`,
+  }
+
+  const witnessArgs = new core.WitnessArgs(new Reader(transaction.witnesses[0]))
+  const inputType = witnessArgs.getInputType()
+  const outputType = witnessArgs.getOutputType()
+  if (inputType.hasValue()) {
+    emptyWitness.inputType = new Reader(inputType.value().raw()).serializeJson()
+  }
+  if (outputType.hasValue()) {
+    emptyWitness.outputType = new Reader(
+      outputType.value().raw()
+    ).serializeJson()
   }
 
   const serializedEmptyWitnessBytes = hexToBytes(
