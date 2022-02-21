@@ -109,6 +109,19 @@ signMessageWithRedirect(successURL, options)
 // If called within a function, you may need to manually `return` after the `signMessageWithRedirect` call.
 ```
 
+#### `generateSignMessageURL`
+
+Generate a url to flashsigner.com and sign message.
+
+`generateSignMessageURL` params is the same as `signMessageWithRedirect` params.
+
+
+```js
+import { generateSignMessageURL } from '@nervina-labs/flashsigner'
+
+const url generateSignMessageURL(successURL, options)
+```
+
 ##### options
 
 * `successURL` — `string`: The URL that will be redirected after sign message.

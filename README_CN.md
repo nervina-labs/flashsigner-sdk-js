@@ -104,12 +104,24 @@ import { signMessageWithRedirect } from '@nervina-labs/flashsigner'
 signMessageWithRedirect(successURL, options)
 ```
 
+#### `generateSignMessageURL`
+
+生成一个 URL 到 flashsigner.com 并签名.
+
+`generateSignMessageURL` 的入参和 `signMessageWithRedirect` 一样。
+
+```js
+import { generateSignMessageURL } from '@nervina-labs/flashsigner'
+
+const url generateSignMessageURL(successURL, options)
+```
+
 ##### options
 
 * `successURL` — `string`: 成功签名后会跳转的 URL 地址
 * `options` — `object`:
   * `message`: — `string, required`: 需要签名的信息
-  * `isRaw` — `string, optional`: 信息是否为 raw message，如果是的话，flashsigner 会把信息先转换为 hex 字符串再进行签名，否则 flashsigner 会直接对信息进行签名
+  * `isRaw` — `string, optional`: 信息是否为 raw message，如果是的话，flashsigner 会把信息先转换为 hex 字符串再进行签名，否则 flashsigner 会直接对信息进行签名，flashsigner 网站也会直接显示签名信息。
   * `name`: — `string, optional`: 你的应用名字
   * `logo` — `string, optional`:  你的应用 logo 的 URL
   * `locale` — `string, optional`: 指定 flashsigner 显示的语言
