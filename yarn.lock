@@ -2212,11 +2212,6 @@ url-parse@^1.5.4:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-url-shim@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/url-shim/-/url-shim-1.0.1.tgz#8842662b0f2edef8df4ebbe507466f04f771eb1b"
-  integrity sha512-8nwZkCP7pbI8ifcifTZSLRO3W+CWuh/mafPvc7utPRqgxAORnsZIzQ5K8LUsHiQ4mTtJrKRAJmW2ZHxQk0rKUA==
-
 v8-compile-cache@^2.0.3:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz#2de19618c66dc247dcfb6f99338035d8245a2cee"

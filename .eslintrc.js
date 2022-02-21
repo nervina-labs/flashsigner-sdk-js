@@ -61,7 +61,6 @@ module.exports = {
     'react/no-unused-class-component-methods': 0,
     'import/extensions': 0,
     'import/no-cycle': 0,
-    'import/no-unresolved': 0,
     'import/no-extraneous-dependencies': [
       'error',
       {
