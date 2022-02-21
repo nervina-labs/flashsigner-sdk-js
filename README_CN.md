@@ -152,6 +152,13 @@ signTransactionWithRedirect(successURL, options)
   * `failUrl` — `string, optional`: 登录失败后会跳转的 URL 地址
   * `extra` — `object, optional`: 指定的额外的数据，flashsigner 会返回相同的 extra 数据到 `successURL`
 
+
+#### `generateSignTransactionURL`
+
+生成一个 flashsigner 待签名交易的 URL。
+
+`generateSignTransactionURL` 的入参和 `signTransactionWithRedirect` 一样。
+
 ### 获取 Flashsigner 返回数据
 
 #### `getResultFromURL`

@@ -147,6 +147,12 @@ signTransactionWithRedirect(successURL, options)
 // If called within a function, you may need to manually `return` after the `signTransactionWithRedirect` call.
 ```
 
+#### `generateSignTransactionURL`
+
+Generate a url to flashsigner.com and sign transaction.
+
+`generateSignTransactionURL` params is the same as `signTransactionWithRedirect`.
+
 ##### options
 
 * `successURL` — `string`: The URL that will be redirected after sign transaction.
