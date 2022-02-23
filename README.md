@@ -245,6 +245,35 @@ getResultFromURL({
 })
 ```
 
+### Verify signature
+
+```js
+const NodeRsa = require('node-rsa')
+const { Buffer } = require('buffer')
+
+const signature = 'your signature'
+
+const response = {
+    "message": "{\"origin\":\"https://wallet.staging.nervina.cn\",\"timestamp\":\"1645548324662\"}",
+    // If you are parsing the signature directly from the response url, you need to take the first 520 characters as pubkey
+    "signature": signature.slice(520),
+    "pubkey": signature.slice(0, 520)
+}
+
+const key = new NodeRsa()
+const buf = Buffer.from(response.pubkey, 'hex')
+const e = buf.slice(0, 4).reverse()
+const n = buf.slice(4).reverse()
+key.importKey({ e, n }, 'components-public')
+key.setOptions({ signingScheme: 'pkcs1-sha256' })
+const result = key.verify(
+    Buffer.from(response.message),
+    Buffer.from(response.signature, 'hex')
+)
+
+console.log(result)
+```
+
 ##### options
 
 * `onLogin`: Callback function for successful login

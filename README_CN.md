@@ -288,6 +288,37 @@ Config.setChainType('mainnet' /* or 'testnet' */)
 
 More config can be found in [source](https://github.com/nervina-labs/flashsigner-sdk-js/blob/master/src/config.ts).
 
+
+### 验证签名
+
+```js
+const NodeRsa = require('node-rsa')
+const { Buffer } = require('buffer')
+
+const signature = 'your signature'
+
+const response = {
+    "message": "{\"origin\":\"https://wallet.staging.nervina.cn\",\"timestamp\":\"1645548324662\"}",
+    // 如果是从 response url 直接解析 signature 则需要取前 520 个字符
+    // 如果从 flashsigner-sdk 得到的参数则可以直接传入验签
+    "signature": signature.slice(520),
+    "pubkey": signature.slice(0, 520)
+}
+
+const key = new NodeRsa()
+const buf = Buffer.from(response.pubkey, 'hex')
+const e = buf.slice(0, 4).reverse()
+const n = buf.slice(4).reverse()
+key.importKey({ e, n }, 'components-public')
+key.setOptions({ signingScheme: 'pkcs1-sha256' })
+const result = key.verify(
+    Buffer.from(response.message),
+    Buffer.from(response.signature, 'hex')
+)
+
+console.log(result)
+```
+
 ### Utils
 
 #### `generateFlashsignerLockScript`
