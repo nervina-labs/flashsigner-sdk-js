@@ -221,16 +221,24 @@ export const appendSignatureToTransaction = (
     lock: `0x${'0'.repeat(lockLength)}`,
   }
 
-  const witnessArgs = new core.WitnessArgs(new Reader(transaction.witnesses[0]))
-  const inputType = witnessArgs.getInputType()
-  const outputType = witnessArgs.getOutputType()
-  if (inputType.hasValue()) {
-    emptyWitness.inputType = new Reader(inputType.value().raw()).serializeJson()
-  }
-  if (outputType.hasValue()) {
-    emptyWitness.outputType = new Reader(
-      outputType.value().raw()
-    ).serializeJson()
+  try {
+    const witnessArgs = new core.WitnessArgs(
+      new Reader(transaction.witnesses[0])
+    )
+    const inputType = witnessArgs.getInputType()
+    const outputType = witnessArgs.getOutputType()
+    if (inputType.hasValue()) {
+      emptyWitness.inputType = new Reader(
+        inputType.value().raw()
+      ).serializeJson()
+    }
+    if (outputType.hasValue()) {
+      emptyWitness.outputType = new Reader(
+        outputType.value().raw()
+      ).serializeJson()
+    }
+  } catch (error) {
+    // do not apply input/output type if witness is invalid
   }
 
   const serializedEmptyWitnessBytes = hexToBytes(
